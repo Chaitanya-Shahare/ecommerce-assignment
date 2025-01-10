@@ -13,10 +13,10 @@ export const Header = () => {
         <h1 className="text-3xl font-bold">
           <Link href={"/"}>E-Commerce Shop App</Link>
         </h1>
-        <button className="flex items-center space-x-2">
+        <Link href={"/cart"} className="flex items-center space-x-2">
           <RiShoppingCartLine />
           <span>{cart.length}</span>
-        </button>
+        </Link>
       </header>
       <hr />
     </>

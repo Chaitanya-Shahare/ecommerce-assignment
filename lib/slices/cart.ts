@@ -1,11 +1,13 @@
+import { IProduct } from "@/app/page";
 import { createSlice } from "@reduxjs/toolkit";
 
-interface item {
+export interface IItem {
   productId: string;
   quantity: number;
+  product: IProduct;
 }
 
-const initialState: { items: item[] } = {
+const initialState: { items: IItem[] } = {
   items: [],
 };
 
