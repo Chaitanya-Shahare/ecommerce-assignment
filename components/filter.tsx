@@ -1,4 +1,39 @@
-export const Filter = () => {
+"use client";
+import { useSearchParams } from "next/navigation";
+import { ChangeEvent, useMemo } from "react";
+
+export interface FilterProps {
+  categories: string[];
+}
+
+export const Filter = ({ categories: c }: FilterProps) => {
+  const searchParams = useSearchParams();
+
+  const categories = useMemo(
+    () => searchParams.getAll("category"),
+    [searchParams]
+  );
+
+  const onCategoryChange = (category: string) => {
+    return (e: ChangeEvent<HTMLInputElement>) => {
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+
+      if (e.target.checked) {
+        params.append("category", category);
+      } else {
+        const categories = params
+          .getAll("category")
+          .filter((c) => c !== category);
+        params.delete("category");
+        categories.forEach((c) => params.append("category", c));
+      }
+
+      url.search = params.toString();
+      window.history.pushState({}, "", url.toString());
+    };
+  };
+
   return (
     <div className="">
       <h3 className="text-2xl font-bold mb-2">Filters</h3>
@@ -6,15 +41,19 @@ export const Filter = () => {
       <div className="mb-4">
         <h4 className="text-lg font-bold mb-1">Categories</h4>
         <ul>
-          {Array.from({ length: 5 }).map((_, i) => (
+          {c.map((category, i) => (
             <li key={i}>
               <input
                 type="checkbox"
                 name=""
                 id={"catetory " + i}
                 className="mr-1"
+                checked={categories.includes(category)}
+                onChange={onCategoryChange(category)}
               />
-              <label htmlFor={"category " + i}>Category {i + 1}</label>
+              <label htmlFor={"category " + i} className="capitalize">
+                {category}
+              </label>
             </li>
           ))}
         </ul>
