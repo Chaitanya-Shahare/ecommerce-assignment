@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
+import cartReducer from "./slices/cart";
 import counterReducer from "./slices/counter";
 import filterReducer from "./slices/filter";
 
 export const makeStore = () => {
   return configureStore({
+    devTools: true,
     reducer: {
       counter: counterReducer,
       filter: filterReducer,
+      cart: cartReducer,
     },
   });
 };

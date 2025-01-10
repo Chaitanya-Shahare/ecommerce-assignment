@@ -1,7 +1,12 @@
+"use client";
+import { useAppSelector } from "@/lib/hooks";
 import { RiShoppingCartLine } from "@remixicon/react";
 import Link from "next/link";
 
 export const Header = () => {
+  const cart = useAppSelector((state) => state.cart.items);
+  console.log("cart", cart);
+
   return (
     <>
       <header className="flex justify-between items-center p-4 max-w-6xl mx-auto">
@@ -10,7 +15,7 @@ export const Header = () => {
         </h1>
         <button className="flex items-center space-x-2">
           <RiShoppingCartLine />
-          <span>3</span>
+          <span>{cart.length}</span>
         </button>
       </header>
       <hr />
