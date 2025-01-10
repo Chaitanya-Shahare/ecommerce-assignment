@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./slices/counter";
+import filterReducer from "./slices/filter";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       counter: counterReducer,
+      filter: filterReducer,
     },
   });
 };

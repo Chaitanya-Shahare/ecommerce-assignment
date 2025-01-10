@@ -1,4 +1,6 @@
 "use client";
+import { useAppDispatch } from "@/lib/hooks";
+import { setAboveRating } from "@/lib/slices/filter";
 import { useSearchParams } from "next/navigation";
 import { ChangeEvent, useMemo, useState } from "react";
 
@@ -36,6 +38,8 @@ export const Filter = ({ categories: c }: FilterProps) => {
 
   const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") ?? "");
   const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") ?? "");
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className="">
@@ -128,10 +132,14 @@ export const Filter = ({ categories: c }: FilterProps) => {
           {Array.from({ length: 2 }).map((_, i) => (
             <li key={i}>
               <input
-                type="checkbox"
-                name=""
+                type="radio"
+                name="rating"
+                value={4 - i}
                 id={"Rating " + i}
                 className="mr-1"
+                onChange={(e) => {
+                  dispatch(setAboveRating(e.target.value));
+                }}
               />
               <label htmlFor={"Rating " + i}>{4 - i} & above</label>
             </li>
