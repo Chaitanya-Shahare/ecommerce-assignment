@@ -4,7 +4,7 @@ import { useAppSelector } from "@/lib/hooks";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Card, CardSkeleton } from "./card";
-import InfiniteScroll from "./InfiniteScroll";
+import InfiniteScroll from "./infinite-scroll";
 
 export const Products = () => {
   const [data, setData] = useState<IProduct[]>([]);
