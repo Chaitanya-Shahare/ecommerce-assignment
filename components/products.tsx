@@ -3,10 +3,12 @@ import { IProduct } from "@/app/page";
 import { useAppSelector } from "@/lib/hooks";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { Card } from "./card";
+import { Card, CardSkeleton } from "./card";
+import InfiniteScroll from "./InfiniteScroll";
 
 export const Products = () => {
-  const [data, setData] = useState({ products: [] });
+  const [data, setData] = useState<IProduct[]>([]);
+  const [hasMore, setHasMore] = useState(true);
   const searchParams = useSearchParams();
 
   const category = useMemo(
@@ -20,42 +22,56 @@ export const Products = () => {
 
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    console.log("run", searchParams.getAll("category"));
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://fake-ecommerce-app-api.onrender.com/products?limit=10" +
-            (category.length
-              ? `&category=${category.reduce((acc, ele) => acc + "," + ele)}`
-              : "") +
-            (minPrice ? `&minPrice=${minPrice}` : "") +
-            (maxPrice ? `&maxPrice=${maxPrice}` : "")
-        );
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+  const fetchData = async (page: number) => {
+    try {
+      const response = await fetch(
+        `https://fake-ecommerce-app-api.onrender.com/products?limit=10&page=${page}` +
+          (category.length
+            ? `&category=${category.reduce((acc, ele) => acc + "," + ele)}`
+            : "") +
+          (minPrice ? `&minPrice=${minPrice}` : "") +
+          (maxPrice ? `&maxPrice=${maxPrice}` : "")
+      );
+      const newData = await response.json();
+      if (newData.products.length === 0) {
+        setHasMore(false);
+      } else {
+        setData((prevData) => [...prevData, ...newData.products]);
       }
-    };
-    fetchData();
-  }, [category, maxPrice, minPrice, searchParams]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const aboveRating = useAppSelector((state) => state.filter.aboveRating);
+
+  const renderData = () => {
+    return data
+      .filter((product) => product.rating >= aboveRating)
+      .map((product, index) => <Card key={index} product={product} />);
+  };
+
+  useEffect(() => {
+    setData([]);
+    setHasMore(true);
+    setLoading(true);
+    fetchData(1);
+  }, [category, maxPrice, minPrice, searchParams]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {loading && <h3 className="text-xl font-bold">Loading...</h3>}
-      {data.products.length === 0 && !loading && (
+      {data.length === 0 && !loading && (
         <h3 className="text-xl font-bold">No Products Found</h3>
       )}
-      {data.products
-        .filter((product: IProduct) => product.rating >= aboveRating)
-        .map((product: IProduct, index: number) => (
-          <Card key={index} product={product} />
-        ))}
+      <InfiniteScroll
+        fetchData={fetchData}
+        renderData={renderData}
+        hasMore={hasMore}
+      />
+      {hasMore && <CardSkeleton />}
     </div>
   );
 };
