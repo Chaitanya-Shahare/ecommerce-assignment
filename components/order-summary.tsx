@@ -19,7 +19,7 @@ export const OrderSummary = () => {
       </div>
       <div className="flex justify-between mt-2 mb-4">
         <p>Shipping</p>
-        <p className="text-gray-600">Calculated at the next step</p>
+        <p className="text-gray-500">Calculated at the next step</p>
       </div>
       <hr className="border-black" />
 

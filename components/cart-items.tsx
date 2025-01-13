@@ -30,7 +30,7 @@ export const CartItem = ({ item }: { item: IItem }) => {
             <p className="line-clamp-2">{item.product.description}</p>
           </div>
           <div>
-            <div className="text-md font-semibold flex justify-between">
+            <div className="text-md font-semibold flex gap-2">
               <p>
                 Quantity:
               </p>
