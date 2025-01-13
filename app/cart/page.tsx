@@ -10,6 +10,7 @@ function CartPage() {
         <CartItems />
         <OrderSummary />
       </div>
+
     </div>
   );
 }

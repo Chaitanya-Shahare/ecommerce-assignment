@@ -1,13 +1,14 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { IItem, removeFromCart } from "@/lib/slices/cart";
+import { IItem, removeFromCart, updateQuantity } from "@/lib/slices/cart";
+
 
 export const CartItems = () => {
   const cart = useAppSelector((state) => state.cart.items);
   return (
     <div>
-      {cart.map((item) => (
+      {cart.map((item: IItem) => (
         <CartItem key={item.productId} item={item} />
       ))}
     </div>
@@ -18,6 +19,7 @@ export const CartItem = ({ item }: { item: IItem }) => {
   "use client";
 
   const dispatch = useAppDispatch();
+
   return (
     <div className="p-2 grid grid-cols-[1fr,3fr] gap-4 border-b-2">
       <div className="h-40 w-40 bg-gray-300"></div>
@@ -28,12 +30,31 @@ export const CartItem = ({ item }: { item: IItem }) => {
             <p className="line-clamp-2">{item.product.description}</p>
           </div>
           <div>
-            <p className="text-md font-semibold">Quantity: {item.quantity}</p>
+            <div className="text-md font-semibold flex justify-between">
+              <p>
+                Quantity:
+              </p>
+              <div className="border-[1px]">
+                <button className="px-2"
+                  onClick={() => {
+                    if (item.quantity <= 1) return;
+                    dispatch(updateQuantity({ productId: item.productId, quantity: item.quantity - 1 }));
+                  }}
+                >-</button>
+                <span>{item.quantity}</span>
+                <button className="px-2"
+                  onClick={() => {
+                    dispatch(updateQuantity({ productId: item.productId, quantity: item.quantity + 1 }));
+                  }}
+                >+</button>
+              </div>
+            </div>
             <p className="text-md font-semibold">
               Price: ${item.product.price}
             </p>
           </div>
         </div>
+
         <button
           className="underline underline-offset-4"
           onClick={() => {
@@ -42,7 +63,9 @@ export const CartItem = ({ item }: { item: IItem }) => {
         >
           Remove
         </button>
+
+
       </div>
-    </div>
+    </div >
   );
 };

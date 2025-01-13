@@ -1,5 +1,4 @@
 "use client";
-
 import { useAppSelector } from "@/lib/hooks";
 
 export const OrderSummary = () => {
@@ -24,10 +23,13 @@ export const OrderSummary = () => {
       </div>
       <hr className="border-black" />
 
-      <div className="flex justify-between mt-4 font-semibold">
+      <div className="flex justify-between mt-4 mb-8 font-semibold">
         <p>Total</p>
         <p>${subtotal}</p>
       </div>
+
+
+      <button className="bg-black text-white px-4 py-2 mt-4 col-span-2  w-full">Proceed to Checkout</button>
     </div>
   );
 };
