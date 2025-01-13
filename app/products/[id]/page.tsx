@@ -19,3 +19,22 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
 };
 
 export default ProductPage;
+
+
+export async function generateMetadata(
+  { params }: {
+    params: { id: string };
+  }
+) {
+  const productId = params.id;
+
+  const response = await fetch(
+    `https://fake-ecommerce-app-api.onrender.com/products/${productId}`
+  );
+  const product: IProduct = await response.json();
+
+  return {
+    title: `${product.title} | ${product.category} | $${product.price}`,
+    description: `${product.description} | ${product.category} | $${product.price}`,
+  }
+}

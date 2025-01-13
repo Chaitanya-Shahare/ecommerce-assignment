@@ -16,3 +16,8 @@ function CartPage() {
 }
 
 export default CartPage;
+
+export const metadata = {
+  title: "Cart",
+  description: "Your cart items",
+};

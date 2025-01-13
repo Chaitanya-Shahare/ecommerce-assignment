@@ -1,6 +1,6 @@
-"use server";
 import { Filter } from "@/components/filter";
 import { Products } from "@/components/products";
+import { Metadata } from "next";
 
 export interface IProduct {
   id: number;
@@ -35,3 +35,9 @@ export default async function Home() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "E-commerce App",
+  description: "A simple e-commerce app built with Blitz.js",
+};
+
