@@ -1,6 +1,6 @@
 "use client";
 import { useAppDispatch } from "@/lib/hooks";
-import { setAboveRating } from "@/lib/slices/filter";
+import { setAboveRating, setSort } from "@/lib/slices/filter";
 import { useSearchParams } from "next/navigation";
 import { ChangeEvent, useMemo, useState } from "react";
 
@@ -13,7 +13,7 @@ export const Filter = ({ categories: c }: FilterProps) => {
 
   const categories = useMemo(
     () => searchParams.getAll("category"),
-    [searchParams]
+    [searchParams],
   );
 
   const onCategoryChange = (category: string) => {
@@ -137,31 +137,45 @@ export const Filter = ({ categories: c }: FilterProps) => {
                   value={4 - i}
                   className="mr-1"
                   onChange={(e) => {
-
                     const url = new URL(window.location.href);
                     const params = new URLSearchParams(url.search);
 
                     if (e.target.checked) {
                       params.set("aboveRating", e.target.value);
-                    }
-                    else {
+                    } else {
                       params.delete("aboveRating");
                     }
                     url.search = params.toString();
                     window.history.pushState({}, "", url.toString());
 
-
-
                     dispatch(setAboveRating(e.target.value));
                   }}
-
                   checked={searchParams.get("aboveRating") === `${4 - i}`}
                 />
-                {4 - i} & above</label>
+                {4 - i} & above
+              </label>
             </li>
           ))}
         </ul>
       </div>
+
+      <h3 className="text-2xl font-bold mb-2">Sorting</h3>
+
+      <select
+        className="border p-2 rounded-md"
+        onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+          const url = new URL(window.location.href);
+          const params = new URLSearchParams(url.search);
+          params.set("sort", e.target.value);
+          url.search = params.toString();
+          window.history.pushState({}, "", url.toString());
+          dispatch(setSort(e.target.value));
+        }}
+        value={searchParams.get("sort") ?? "price"}
+      >
+        <option value="price">Price</option>
+        <option value="rating">Rating</option>
+      </select>
     </div>
   );
 };
