@@ -2,7 +2,7 @@ import { IProduct } from "@/app/page";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IItem {
-  productId: string;
+  productId: number;
   quantity: number;
   product: IProduct;
 }
@@ -10,7 +10,7 @@ export interface IItem {
 const initialState: { items: IItem[] } = {
   items: [
     {
-      productId: "1",
+      productId: 1,
       quantity: 1,
       product: {
         id: 1,
@@ -24,7 +24,7 @@ const initialState: { items: IItem[] } = {
       },
     },
     {
-      productId: "2",
+      productId: 2,
       quantity: 2,
       product: {
         id: 2,
@@ -46,7 +46,7 @@ const CartSlice = createSlice({
   reducers: {
     addToCart: (state, action: PayloadAction<IItem>) => {
       const item = state.items.find(
-        (item: IItem) => item.productId === action.payload.productId
+        (item: IItem) => item.productId === action.payload.productId,
       );
       if (item) {
         item.quantity += action.payload.quantity;
@@ -57,12 +57,12 @@ const CartSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       state.items = state.items.filter(
-        (item: IItem) => item.productId !== action.payload.productId
+        (item: IItem) => item.productId !== action.payload.productId,
       );
     },
     updateQuantity: (state, action) => {
       const item = state.items.find(
-        (item: IItem) => item.productId === action.payload.productId
+        (item: IItem) => item.productId === action.payload.productId,
       );
       if (item) {
         item.quantity = action.payload.quantity;

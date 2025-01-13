@@ -4,12 +4,11 @@ import { RiShoppingCartLine } from "@remixicon/react";
 import Link from "next/link";
 
 export const Header = () => {
-
   const cart = useAppSelector((state) => state.cart.items);
 
   return (
     <>
-      <header className="flex justify-between items-center p-4 max-w-6xl mx-auto">
+      <header className="flex justify-between items-center p-4 max-w-6xl mx-auto font-serif">
         <h1 className="text-xl md:text-3xl font-bold md:font-black">
           <Link href={"/"}>E-Commerce App</Link>
         </h1>

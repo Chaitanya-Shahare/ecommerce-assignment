@@ -1,6 +1,15 @@
 "use client";
 import { useAppDispatch } from "@/lib/hooks";
 import { setAboveRating, setSort } from "@/lib/slices/filter";
+import {
+  RiBookShelfLine,
+  RiFilter3Fill,
+  RiPriceTag3Fill,
+  RiPriceTag3Line,
+  RiSortAsc,
+  RiStarLine,
+  RiStarSLine,
+} from "@remixicon/react";
 import { useSearchParams } from "next/navigation";
 import { ChangeEvent, useMemo, useState } from "react";
 
@@ -43,10 +52,16 @@ export const Filter = ({ categories: c }: FilterProps) => {
 
   return (
     <div className="">
-      <h3 className="text-2xl font-bold mb-2">Filters</h3>
+      <h3 className="text-2xl font-bold mb-2 flex items-center justify-between">
+        Filters
+        <RiFilter3Fill />
+      </h3>
 
       <div className="mb-4">
-        <h4 className="text-lg font-bold mb-1">Categories</h4>
+        <h4 className="text-lg font-bold mb-1 flex items-center justify-between">
+          Categories
+          <RiBookShelfLine />
+        </h4>
         <ul>
           {c.map((category, i) => (
             <li key={i}>
@@ -66,7 +81,10 @@ export const Filter = ({ categories: c }: FilterProps) => {
       </div>
 
       <div className="mb-4">
-        <h4 className="text-lg font-bold mb-1">Price Range</h4>
+        <h4 className="text-lg font-bold mb-1 flex items-center justify-between">
+          Price Range
+          <RiPriceTag3Line />
+        </h4>
 
         <div className="flex space-x-2">
           <input
@@ -125,7 +143,10 @@ export const Filter = ({ categories: c }: FilterProps) => {
       </div>
 
       <div className="mb-4">
-        <h4 className="text-lg font-bold mb-1">Customer Rating</h4>
+        <h4 className="text-lg font-bold mb-1 flex justify-between items-center">
+          Customer Rating
+          <RiStarLine />
+        </h4>
 
         <ul>
           {Array.from({ length: 2 }).map((_, i) => (
@@ -159,7 +180,10 @@ export const Filter = ({ categories: c }: FilterProps) => {
         </ul>
       </div>
 
-      <h3 className="text-2xl font-bold mb-2">Sorting</h3>
+      <h3 className="text-2xl font-bold mb-2 flex justify-between items-center">
+        Sorting
+        <RiSortAsc />
+      </h3>
 
       <select
         className="border p-2 rounded-md"
