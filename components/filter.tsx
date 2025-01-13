@@ -138,8 +138,25 @@ export const Filter = ({ categories: c }: FilterProps) => {
                 id={"Rating " + i}
                 className="mr-1"
                 onChange={(e) => {
+
+                  const url = new URL(window.location.href);
+                  const params = new URLSearchParams(url.search);
+
+                  if (e.target.checked) {
+                    params.set("aboveRating", e.target.value);
+                  }
+                  else {
+                    params.delete("aboveRating");
+                  }
+                  url.search = params.toString();
+                  window.history.pushState({}, "", url.toString());
+
+
+
                   dispatch(setAboveRating(e.target.value));
                 }}
+
+                checked={searchParams.get("aboveRating") === `${4 - i}`}
               />
               <label htmlFor={"Rating " + i}>{4 - i} & above</label>
             </li>
