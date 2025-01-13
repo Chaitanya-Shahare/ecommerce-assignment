@@ -2,10 +2,9 @@
 import { IProduct } from "@/app/page";
 import { useAppSelector } from "@/lib/hooks";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Card, CardSkeleton } from "./card";
 import InfiniteScroll from "./infinite-scroll";
-import { debounce } from "@/utils/debounce";
 
 export const Products = () => {
   const [data, setData] = useState<IProduct[]>([]);
@@ -23,33 +22,34 @@ export const Products = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async (page: number) => {
-    try {
-      const response = await fetch(
-        `https://fake-ecommerce-app-api.onrender.com/products?limit=10&page=${page}` +
-          (category.length
-            ? `&category=${category.reduce((acc, ele) => acc + "," + ele)}`
-            : "") +
-          (minPrice ? `&minPrice=${minPrice}` : "") +
-          (maxPrice ? `&maxPrice=${maxPrice}` : ""),
-      );
-      const newData = await response.json();
-      if (newData.products.length === 0) {
-        setHasMore(false);
-      } else {
-        setData((prevData) => [...prevData, ...newData.products]);
+  const fetchData = useCallback(
+    async (page: number) => {
+      try {
+        const response = await fetch(
+          `https://fake-ecommerce-app-api.onrender.com/products?limit=10&page=${page}` +
+            (category.length
+              ? `&category=${category.reduce((acc, ele) => acc + "," + ele)}`
+              : "") +
+            (minPrice ? `&minPrice=${minPrice}` : "") +
+            (maxPrice ? `&maxPrice=${maxPrice}` : ""),
+        );
+        const newData = await response.json();
+        if (newData.products.length === 0) {
+          setHasMore(false);
+        } else {
+          setData((prevData) => [...prevData, ...newData.products]);
+        }
+      } catch (error) {
+        console.error(error);
+        throw new Error(
+          "Something went wrong while fetching products, please try again.",
+        );
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error(error);
-      throw new Error(
-        "Something went wrong while fetching products, please try again.",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const debouncedFetchData = debounce(fetchData, 500);
+    },
+    [category, maxPrice, minPrice],
+  );
 
   const aboveRating = useAppSelector((state) => state.filter.aboveRating);
 
@@ -72,9 +72,15 @@ export const Products = () => {
     setData([]);
     setHasMore(true);
     setLoading(true);
-    debouncedFetchData(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, maxPrice, minPrice, searchParams]);
+
+    const timer = setTimeout(() => {
+      fetchData(1);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [category, fetchData, maxPrice, minPrice, searchParams]);
 
   return (
     <>
