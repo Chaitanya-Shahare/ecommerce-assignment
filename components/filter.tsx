@@ -50,15 +50,14 @@ export const Filter = ({ categories: c }: FilterProps) => {
         <ul>
           {c.map((category, i) => (
             <li key={i}>
-              <input
-                type="checkbox"
-                name=""
-                id={"catetory " + i}
-                className="mr-1"
-                checked={categories.includes(category)}
-                onChange={onCategoryChange(category)}
-              />
-              <label htmlFor={"category " + i} className="capitalize">
+              <label className="capitalize cursor-pointer">
+                <input
+                  type="checkbox"
+                  name=""
+                  className="mr-1"
+                  checked={categories.includes(category)}
+                  onChange={onCategoryChange(category)}
+                />
                 {category}
               </label>
             </li>
@@ -75,7 +74,7 @@ export const Filter = ({ categories: c }: FilterProps) => {
             name=""
             id=""
             placeholder="Min"
-            className="border w-20 p-2"
+            className="border w-20 p-2 rounded-md"
             value={minPrice}
             onChange={(e) => {
               const url = new URL(window.location.href);
@@ -101,7 +100,7 @@ export const Filter = ({ categories: c }: FilterProps) => {
             name=""
             id=""
             placeholder="Max"
-            className="border w-20 p-2"
+            className="border w-20 p-2 rounded-md"
             value={maxPrice}
             onChange={(e) => {
               const url = new URL(window.location.href);
@@ -131,34 +130,34 @@ export const Filter = ({ categories: c }: FilterProps) => {
         <ul>
           {Array.from({ length: 2 }).map((_, i) => (
             <li key={i}>
-              <input
-                type="radio"
-                name="rating"
-                value={4 - i}
-                id={"Rating " + i}
-                className="mr-1"
-                onChange={(e) => {
+              <label className="cursor-pointer">
+                <input
+                  type="radio"
+                  name="rating"
+                  value={4 - i}
+                  className="mr-1"
+                  onChange={(e) => {
 
-                  const url = new URL(window.location.href);
-                  const params = new URLSearchParams(url.search);
+                    const url = new URL(window.location.href);
+                    const params = new URLSearchParams(url.search);
 
-                  if (e.target.checked) {
-                    params.set("aboveRating", e.target.value);
-                  }
-                  else {
-                    params.delete("aboveRating");
-                  }
-                  url.search = params.toString();
-                  window.history.pushState({}, "", url.toString());
+                    if (e.target.checked) {
+                      params.set("aboveRating", e.target.value);
+                    }
+                    else {
+                      params.delete("aboveRating");
+                    }
+                    url.search = params.toString();
+                    window.history.pushState({}, "", url.toString());
 
 
 
-                  dispatch(setAboveRating(e.target.value));
-                }}
+                    dispatch(setAboveRating(e.target.value));
+                  }}
 
-                checked={searchParams.get("aboveRating") === `${4 - i}`}
-              />
-              <label htmlFor={"Rating " + i}>{4 - i} & above</label>
+                  checked={searchParams.get("aboveRating") === `${4 - i}`}
+                />
+                {4 - i} & above</label>
             </li>
           ))}
         </ul>

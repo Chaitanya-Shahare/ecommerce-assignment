@@ -16,7 +16,7 @@ export const AddToCart = ({ product }: AddToCartProps) => {
   return (
     <div className="flex items-center gap-1">
       <button
-        className="p-4 bg-black text-white w-3/5"
+        className="p-4 bg-black text-white w-3/5 rounded-md"
         onClick={() => {
           dispatch(addToCart({ productId: product.id, product, quantity }));
           setQuantity(1);
@@ -25,7 +25,7 @@ export const AddToCart = ({ product }: AddToCartProps) => {
         Add to Cart
       </button>
 
-      <div className="flex items-center border-2 text-xl">
+      <div className="flex items-center border-2 text-xl rounded-md">
         <button
           onClick={() =>
             setQuantity((prev) => {
