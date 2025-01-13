@@ -26,11 +26,11 @@ export const Products = () => {
     try {
       const response = await fetch(
         `https://fake-ecommerce-app-api.onrender.com/products?limit=10&page=${page}` +
-          (category.length
-            ? `&category=${category.reduce((acc, ele) => acc + "," + ele)}`
-            : "") +
-          (minPrice ? `&minPrice=${minPrice}` : "") +
-          (maxPrice ? `&maxPrice=${maxPrice}` : ""),
+        (category.length
+          ? `&category=${category.reduce((acc, ele) => acc + "," + ele)}`
+          : "") +
+        (minPrice ? `&minPrice=${minPrice}` : "") +
+        (maxPrice ? `&maxPrice=${maxPrice}` : ""),
       );
       const newData = await response.json();
       if (newData.products.length === 0) {
@@ -62,17 +62,23 @@ export const Products = () => {
   }, [category, maxPrice, minPrice, searchParams]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {loading && <h3 className="text-xl font-bold">Loading...</h3>}
-      {data.length === 0 && !loading && (
-        <h3 className="text-xl font-bold">No Products Found</h3>
-      )}
-      <InfiniteScroll
-        fetchData={fetchData}
-        renderData={renderData}
-        hasMore={hasMore}
-      />
-      {hasMore && <CardSkeleton />}
-    </div>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {loading && <h3 className="text-xl font-bold">Loading...</h3>}
+
+        {data.length === 0 && !loading && (
+          <h3 className="text-xl font-bold">No Products Found</h3>
+        )}
+
+        <p className="col-span-3">Showing {data.length} products.</p>
+
+        <InfiniteScroll
+          fetchData={fetchData}
+          renderData={renderData}
+          hasMore={hasMore}
+        />
+        {hasMore && <CardSkeleton />}
+      </div>
+    </>
   );
 };
