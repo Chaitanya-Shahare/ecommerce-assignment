@@ -13,7 +13,7 @@ export const Products = () => {
 
   const category = useMemo(
     () => searchParams.getAll("category"),
-    [searchParams]
+    [searchParams],
   );
 
   const minPrice = useMemo(() => searchParams.get("minPrice"), [searchParams]);
@@ -30,7 +30,7 @@ export const Products = () => {
             ? `&category=${category.reduce((acc, ele) => acc + "," + ele)}`
             : "") +
           (minPrice ? `&minPrice=${minPrice}` : "") +
-          (maxPrice ? `&maxPrice=${maxPrice}` : "")
+          (maxPrice ? `&maxPrice=${maxPrice}` : ""),
       );
       const newData = await response.json();
       if (newData.products.length === 0) {
@@ -58,6 +58,7 @@ export const Products = () => {
     setHasMore(true);
     setLoading(true);
     fetchData(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, maxPrice, minPrice, searchParams]);
 
   return (
