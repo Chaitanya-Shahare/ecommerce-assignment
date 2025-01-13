@@ -11,7 +11,7 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
   const product: IProduct = await response.json();
 
   https: return (
-    <div className="max-w-6xl mx-auto grid grid-cols-2 gap-11 p-4">
+    <div className="max-w-6xl mx-auto grid grid-cols-2 gap-11 p-4 min-h-[70vh]">
       <ImageGallery />
       <ProductDetails product={product} />
     </div>

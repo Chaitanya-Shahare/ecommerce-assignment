@@ -63,7 +63,7 @@ export const Products = () => {
 
   return (
     <>
-      <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {loading && <h3 className="text-xl font-bold">Loading...</h3>}
 
         {data.length === 0 && !loading && (
