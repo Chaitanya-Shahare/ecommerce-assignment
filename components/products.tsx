@@ -40,6 +40,7 @@ export const Products = () => {
       }
     } catch (error) {
       console.error(error);
+      throw new Error("Something went wrong while fetching products, please try again.")
     } finally {
       setLoading(false);
     }
