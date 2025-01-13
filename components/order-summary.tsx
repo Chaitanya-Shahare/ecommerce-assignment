@@ -10,8 +10,8 @@ export const OrderSummary = () => {
   }, 0)
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
+    <div className="mb-28">
+      <h2 className="text-xl md:text-2xl font-semibold md:font-bold mb-4">Order Summary</h2>
 
       <div className="flex justify-between mt-2">
         <p>Subtotal</p>

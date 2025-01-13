@@ -26,11 +26,11 @@ export const CartItem = ({ item }: { item: IItem }) => {
       <div className="flex justify-between items-end">
         <div className="flex flex-col h-full justify-between">
           <div>
-            <h4 className="text-xl font-bold">{item.product.title}</h4>
+            <h4 className="text-lg md:text-xl font-bold">{item.product.title}</h4>
             <p className="line-clamp-2">{item.product.description}</p>
           </div>
           <div>
-            <div className="text-md font-semibold flex gap-2">
+            <div className="text-sm md:text-md font-semibold flex gap-2">
               <p>
                 Quantity:
               </p>
@@ -49,7 +49,7 @@ export const CartItem = ({ item }: { item: IItem }) => {
                 >+</button>
               </div>
             </div>
-            <p className="text-md font-semibold">
+            <p className="text-sm md:text-md font-semibold">
               Price: ${item.product.price}
             </p>
           </div>

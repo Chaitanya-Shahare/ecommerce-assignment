@@ -10,7 +10,7 @@ export const Header = () => {
   return (
     <>
       <header className="flex justify-between items-center p-4 max-w-6xl mx-auto">
-        <h1 className="text-3xl font-black">
+        <h1 className="text-xl md:text-3xl font-bold md:font-black">
           <Link href={"/"}>E-Commerce Shop App</Link>
         </h1>
         <Link href={"/cart"} className="flex items-center space-x-2">

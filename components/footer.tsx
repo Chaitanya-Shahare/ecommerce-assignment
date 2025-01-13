@@ -5,12 +5,13 @@ export const Footer = () => {
     <>
       <hr />
       <footer className="max-w-6xl mx-auto">
-        <div className="flex ml-[50%]">
-          {Array.from({ length: 3 }).map((_, i) => (
+        <div className="flex flex-wrap justify-between p-4">
+          <h2 className="font-bold text-2xl md:text-3xl">E-commerce App</h2>
+          {Array.from({ length: 3 }).map((_, i: number) => (
             <div key={i} className="p-4">
-              <h2 className="text-lg font-bold">Lorem ipsum</h2>
+              <h2 className="text-lg font-bold underline underline-offset-4">Lorem ipsum</h2>
               <ul className="mt-2 space-y-2">
-                {Array.from({ length: 5 }).map((_, i) => (
+                {Array.from({ length: 5 }).map((_, i: number) => (
                   <li key={i}>
                     <Link href={"/"} className="">
                       Lorem
