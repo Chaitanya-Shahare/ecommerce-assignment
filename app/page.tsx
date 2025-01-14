@@ -14,7 +14,7 @@ export interface IProduct {
   __v: number;
 }
 
-const categories = [
+const FILTER_CATEGORIES = [
   "smartphones",
   "laptops",
   "lighting",
@@ -30,8 +30,10 @@ export default async function Home() {
   return (
     <div className="max-w-6xl mx-auto p-4 min-h-[60vh] mb-28">
       <div className="grid grid-cols-1 sm:grid-cols-[1fr,3fr] gap-4">
-        <Filter categories={categories} />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Loading filters...</div>}>
+          <Filter categories={FILTER_CATEGORIES} />
+        </Suspense>
+        <Suspense fallback={<div>Loading products...</div>}>
           <Products />
         </Suspense>
       </div>

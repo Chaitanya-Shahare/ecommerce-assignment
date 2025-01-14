@@ -83,25 +83,23 @@ export const Products = () => {
   }, [category, fetchData, maxPrice, minPrice, searchParams]);
 
   return (
-    <>
-      <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {loading && <h3 className="text-xl font-bold">Loading...</h3>}
+    <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {loading && <h3 className="text-xl font-bold">Loading...</h3>}
 
-        {data?.length === 0 && !loading && (
-          <h3 className="text-xl font-bold">No Products Found</h3>
-        )}
+      {data?.length === 0 && !loading && (
+        <h3 className="text-xl font-bold">No Products Found</h3>
+      )}
 
-        <p className="col-span-1 md:col-span-2 lg:col-span-3">
-          Showing {data?.length} products.
-        </p>
+      <p className="col-span-1 md:col-span-2 lg:col-span-3">
+        Showing {data?.length} products.
+      </p>
 
-        <InfiniteScroll
-          fetchData={fetchData}
-          renderData={renderData}
-          hasMore={hasMore}
-        />
-        {hasMore && <CardSkeleton />}
-      </div>
-    </>
+      <InfiniteScroll
+        fetchData={fetchData}
+        renderData={renderData}
+        hasMore={hasMore}
+      />
+      {hasMore && <CardSkeleton />}
+    </div>
   );
 };
