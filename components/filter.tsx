@@ -203,3 +203,90 @@ export const Filter = ({ categories: c }: FilterProps) => {
     </>
   );
 };
+
+export const FilterSkeleton = ({ categories: c }: FilterProps) => {
+  return (
+    <>
+      <div className="">
+        <h3 className="text-2xl font-bold mb-2 flex items-center justify-between">
+          Filters
+          <RiFilter3Fill />
+        </h3>
+
+        <div className="mb-4">
+          <h4 className="text-lg font-bold mb-1 flex items-center justify-between">
+            Categories
+            <RiBookShelfLine />
+          </h4>
+          <ul>
+            {c.map((category, i) => (
+              <li key={i}>
+                <label className="capitalize cursor-pointer">
+                  <input type="checkbox" name="" className="mr-1" />
+                  {category}
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mb-4">
+          <h4 className="text-lg font-bold mb-1 flex items-center justify-between">
+            Price Range
+            <RiPriceTag3Line />
+          </h4>
+
+          <div className="flex space-x-2">
+            <input
+              type="number"
+              name=""
+              id=""
+              placeholder="Min"
+              className="border w-20 p-2 rounded-md"
+            />
+            <input
+              type="number"
+              name=""
+              id=""
+              placeholder="Max"
+              className="border w-20 p-2 rounded-md"
+            />
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <h4 className="text-lg font-bold mb-1 flex justify-between items-center">
+            Customer Rating
+            <RiStarLine />
+          </h4>
+
+          <ul>
+            {Array.from({ length: 2 }).map((_, i) => (
+              <li key={i}>
+                <label className="cursor-pointer">
+                  <input
+                    type="radio"
+                    name="rating"
+                    value={4 - i}
+                    className="mr-1"
+                  />
+                  {4 - i} & above
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <h3 className="text-2xl font-bold mb-2 flex justify-between items-center">
+          Sorting
+          <RiSortAsc />
+        </h3>
+
+        <select className="border p-2 rounded-md">
+          <option value="price">Price</option>
+          <option value="rating">Rating</option>
+        </select>
+      </div>
+    </>
+  );
+};

@@ -1,5 +1,6 @@
-import { Filter } from "@/components/filter";
+import { Filter, FilterSkeleton } from "@/components/filter";
 import { Products } from "@/components/products";
+// import { ProductsFallback } from "@/components/products-fallback";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -30,10 +31,11 @@ export default async function Home() {
   return (
     <div className="max-w-6xl mx-auto p-4 min-h-[60vh] mb-28">
       <div className="grid grid-cols-1 sm:grid-cols-[1fr,3fr] gap-4">
-        <Suspense fallback={<div>Loading filters...</div>}>
+        <Suspense fallback={<FilterSkeleton categories={FILTER_CATEGORIES} />}>
           <Filter categories={FILTER_CATEGORIES} />
         </Suspense>
-        <Suspense fallback={<div>Loading products...</div>}>
+        {/* <Suspense fallback={<ProductsFallback />}> */}
+        <Suspense fallback={<div>Loading Products...</div>}>
           <Products />
         </Suspense>
       </div>
