@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { IItem, removeFromCart, updateQuantity } from "@/lib/slices/cart";
-
+import { RiImageLine } from "@remixicon/react";
 
 export const CartItems = () => {
   const cart = useAppSelector((state) => state.cart.items);
@@ -22,31 +22,49 @@ export const CartItem = ({ item }: { item: IItem }) => {
 
   return (
     <div className="p-2 grid grid-cols-[1fr,3fr] gap-4 border-b-2">
-      <div className="h-40 w-40 bg-gray-300"></div>
+      <div className="h-40 w-40 bg-gray-300 rounded-md flex justify-center items-center text-gray-500">
+        <RiImageLine size={30} />
+      </div>
       <div className="flex justify-between items-end">
         <div className="flex flex-col h-full justify-between">
           <div>
-            <h4 className="text-lg md:text-xl font-bold">{item.product.title}</h4>
+            <h4 className="text-lg md:text-xl font-bold">
+              {item.product.title}
+            </h4>
             <p className="line-clamp-2">{item.product.description}</p>
           </div>
           <div>
             <div className="text-sm md:text-md font-semibold flex gap-2">
-              <p>
-                Quantity:
-              </p>
+              <p>Quantity:</p>
               <div className="border-[1px]">
-                <button className="px-2"
+                <button
+                  className="px-2"
                   onClick={() => {
                     if (item.quantity <= 1) return;
-                    dispatch(updateQuantity({ productId: item.productId, quantity: item.quantity - 1 }));
+                    dispatch(
+                      updateQuantity({
+                        productId: item.productId,
+                        quantity: item.quantity - 1,
+                      }),
+                    );
                   }}
-                >-</button>
+                >
+                  -
+                </button>
                 <span>{item.quantity}</span>
-                <button className="px-2"
+                <button
+                  className="px-2"
                   onClick={() => {
-                    dispatch(updateQuantity({ productId: item.productId, quantity: item.quantity + 1 }));
+                    dispatch(
+                      updateQuantity({
+                        productId: item.productId,
+                        quantity: item.quantity + 1,
+                      }),
+                    );
                   }}
-                >+</button>
+                >
+                  +
+                </button>
               </div>
             </div>
             <p className="text-sm md:text-md font-semibold">
@@ -63,9 +81,7 @@ export const CartItem = ({ item }: { item: IItem }) => {
         >
           Remove
         </button>
-
-
       </div>
-    </div >
+    </div>
   );
 };

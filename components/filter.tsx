@@ -20,7 +20,7 @@ export const Filter = ({ categories: c }: FilterProps) => {
 
   const categories = useMemo(
     () => searchParams.getAll("category"),
-    [searchParams],
+    [searchParams]
   );
 
   const onCategoryChange = (category: string) => {

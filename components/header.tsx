@@ -8,9 +8,9 @@ export const Header = () => {
 
   return (
     <>
-      <header className="flex justify-between items-center p-4 max-w-6xl mx-auto font-serif">
+      <header className="flex justify-between items-center p-4 max-w-6xl mx-auto font-sans">
         <h1 className="text-xl md:text-3xl font-bold md:font-black">
-          <Link href={"/"}>E-Commerce App</Link>
+          <Link href={"/"}>E-Commerce</Link>
         </h1>
         <Link href={"/cart"} className="flex items-center space-x-2">
           <RiShoppingCartLine />

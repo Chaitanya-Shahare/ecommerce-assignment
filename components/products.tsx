@@ -6,24 +6,29 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Card, CardSkeleton } from "./card";
 import InfiniteScroll from "./infinite-scroll";
 
-export const Products = () => {
-  const [data, setData] = useState<IProduct[]>([]);
+export const Products = ({
+  initialProducts,
+}: {
+  initialProducts: IProduct[];
+}) => {
+  const [data, setData] = useState<IProduct[]>(initialProducts);
   const [hasMore, setHasMore] = useState(true);
   const searchParams = useSearchParams();
 
   const category = useMemo(
     () => searchParams.getAll("category"),
-    [searchParams],
+    [searchParams]
   );
 
   const minPrice = useMemo(() => searchParams.get("minPrice"), [searchParams]);
 
   const maxPrice = useMemo(() => searchParams.get("maxPrice"), [searchParams]);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = useCallback(
     async (page: number) => {
+      setLoading(true);
       try {
         const response = await fetch(
           `https://fake-ecommerce-app-api.onrender.com/products?limit=10&page=${page}` +
@@ -31,7 +36,7 @@ export const Products = () => {
               ? `&category=${category.reduce((acc, ele) => acc + "," + ele)}`
               : "") +
             (minPrice ? `&minPrice=${minPrice}` : "") +
-            (maxPrice ? `&maxPrice=${maxPrice}` : ""),
+            (maxPrice ? `&maxPrice=${maxPrice}` : "")
         );
         const newData = await response.json();
         if (newData.products.length === 0) {
@@ -42,13 +47,13 @@ export const Products = () => {
       } catch (error) {
         console.error(error);
         throw new Error(
-          "Something went wrong while fetching products, please try again.",
+          "Something went wrong while fetching products, please try again."
         );
       } finally {
         setLoading(false);
       }
     },
-    [category, maxPrice, minPrice],
+    [category, maxPrice, minPrice]
   );
 
   const aboveRating = useAppSelector((state) => state.filter.aboveRating);
