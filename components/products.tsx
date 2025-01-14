@@ -58,10 +58,14 @@ export const Products = () => {
   const renderData = () => {
     return data
       .sort((a, b) => {
-        if (sort === "price") {
+        if (sort === "price low to high") {
           return a.price - b.price;
-        } else {
+        } else if (sort === "price high to low") {
+          return b.price - a.price;
+        } else if (sort === "rating") {
           return b.rating - a.rating;
+        } else {
+          return 0;
         }
       })
       .filter((product) => product.rating >= aboveRating)

@@ -4,14 +4,14 @@ interface IFilter {
   aboveRating: number;
   minPrice: number;
   maxPrice: number;
-  sort: "price" | "rating";
+  sort: "price low to high" | "price high to low" | "rating";
 }
 
 const initialState: IFilter = {
   aboveRating: 0,
   minPrice: 0,
   maxPrice: 20000,
-  sort: "price",
+  sort: "price low to high",
 };
 const FilterSlice = createSlice({
   name: "filter",

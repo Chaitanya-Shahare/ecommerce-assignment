@@ -196,7 +196,8 @@ export const Filter = ({ categories: c }: FilterProps) => {
           }}
           value={searchParams.get("sort") ?? "price"}
         >
-          <option value="price">Price</option>
+          <option value="price low to high">Price Low to High</option>
+          <option value="price high to low">Price High to Low</option>
           <option value="rating">Rating</option>
         </select>
       </div>
@@ -283,7 +284,8 @@ export const FilterSkeleton = ({ categories: c }: FilterProps) => {
         </h3>
 
         <select className="border p-2 rounded-md">
-          <option value="price">Price</option>
+          <option value="price low to high">Price Low to High</option>
+          <option value="price high to low">Price High to Low</option>
           <option value="rating">Rating</option>
         </select>
       </div>
